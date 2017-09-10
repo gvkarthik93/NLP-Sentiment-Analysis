@@ -67,18 +67,12 @@ while (count < 10000):
 
 #Bigram Random Sentence Generator
 count = 0
-prev;
+prevWord = "<s>";
 bigramRandomSentence = ""
 while (count < 100):
-	print (prevWord)
-	indexOfPrev = uniqueCorpusList.index(prevWord)
-	print(indexOfPrev)
 	iterate = 0;
-	for prob in bigramMatrix[indexOfPrev]:
-		word2 = uniqueCorpusList[iterate];
-		my_list = my_list + [word2] * prob;
-		iterate = iterate + 1;
-	print(my_list)
+	for key, value in bigramDic[prevWord].iteritems():
+		my_list = my_list + [key] * value;
 	randomWord = random.choice(my_list);
 	if randomWord == "</s>":
 		break;
