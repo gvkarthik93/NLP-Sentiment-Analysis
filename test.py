@@ -1,43 +1,39 @@
+import collections
+sentence = ["I am coding this crap .",
+        "But I have no idea !",
+        "I am coding still ."]
+
 f = open("/Users/karthik/Development/NLP-Sentiment-Analysis/SentimentDataset/Train/pos.txt")
+unigram = collections.defaultdict(int)
 
-unigramCorpusList = list()
-bigramCorpusList = list()
-uniqueUnigramCorpusList = list()
-uniqueBigramCorpusList = list()
+bigram = {}
 
-unigramCountDictionary = dict()
-bigramCountDictionary = dict()
+# word_count = collections.defaultdict(int)
 
-probabilityMatrixData = dict()
+# collections.defaultdict
+
+# fopen
 
 for line in f:
-	line = "#start#" + " " + line + " " + "#stop#"
-	unigramCorpusList = unigramCorpusList + line.split()
-	biGramLine = line.split()
-	for x in range(0,len(biGramLine)-1):
-		bigramCorpusList.append(biGramLine[x] + " " + biGramLine[x+1])
+    line = ["#Start#"]+line.split()
+    # for word in line:
+    #   # unigram[word] += 1
+    #   pass
+    for i in range(len(line)-1):
+        word, next_word = line[i], line[i+1]
+        unigram[word]+=1
+        
+        if word not in bigram:
+            # bigram[word] = collections.defaultdict(int)
+            bigram[word] = {}
+        if next_word not in bigram[word]:
+            bigram[word][next_word] = 0
+        bigram[word][next_word]+=1
+print (unigram)
+print (bigram)
 
-uniqueUnigramCorpusList = list(set(unigramCorpusList));
-uniqueBigramCorpusList = list(set(bigramCorpusList));
+#  generate sentence
 
-for x in uniqueUnigramCorpusList:
-	wordCount = unigramCorpusList.count(x)
-	unigramCountDictionary[x] = wordCount
+import random
 
-for y in uniqueBigramCorpusList:
-	bigramWordCount = bigramCorpusList.count(y)
-	bigramCountDictionary[y] = bigramWordCount
-
-for k in range(0,len(uniqueUnigramCorpusList)):
-	rowDictionary = dict()
-	for j in range(0,len(uniqueUnigramCorpusList)):
-		bigramString = uniqueUnigramCorpusList[k] + " " + uniqueUnigramCorpusList[j]
-		print (bigramString)
-		try:
-			probabilityValue = bigramCorpusList.count(bigramString) / unigramCorpusList(uniqueUnigramCorpusList[k])
-		except:
-			probabilityValue = 0
-		rowDictionary[uniqueUnigramCorpusList[j]] = probabilityValue
-	probabilityMatrixData[uniqueUnigramCorpusList[k]] = rowDictionary
-
-
+print (random.uniform(0,1))
