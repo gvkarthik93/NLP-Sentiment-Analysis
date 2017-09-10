@@ -41,7 +41,7 @@ import random
 def random_sentence_generator_unigram():
 	# print unigram
 	def pick_random_word_unigram():
-		rand_val = random.uniform(0,1) * len(unigram)-1
+		rand_val = random.uniform(0,len(unigram))
 		total = 0
 		for k, v in unigram.items():
 			total += v
@@ -62,7 +62,10 @@ def random_sentence_generator_unigram():
 	return sentence+word
 	
 for i in range(5):
-	print random_sentence_generator_unigram()
+	sentence = random_sentence_generator_unigram()
+	while len(sentence) >= 99:
+		sentence = random_sentence_generator_unigram()
+	print sentence
 
 
 def random_sentence_generator_bigram():
