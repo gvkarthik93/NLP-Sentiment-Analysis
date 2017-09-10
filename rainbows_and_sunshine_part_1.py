@@ -41,7 +41,7 @@ import random
 def random_sentence_generator_unigram():
 	# print unigram
 	def pick_random_word_unigram():
-		rand_val = random.uniform(0,len(unigram))
+		rand_val = random.uniform(0,len(unigram)-1)
 		total = 0
 		for k, v in unigram.items():
 			total += v
@@ -69,15 +69,15 @@ for i in range(5):
 
 
 def random_sentence_generator_bigram():
-	def pick_random_word_bigram():
-		rand_val = random.uniform(0,1) * len(unigram)-1
+	def pick_random_word_bigram(first_token):
+		rand_val = random.uniform(0,unigram[first_token])
 		total = 0
-		for k, v in unigram.items():
+		for k, v in bigram[first_token].items():
 			total += v
 			if rand_val <= total:
 				return k
 	
-	word = pick_random_word_unigram()
+	word = pick_random_word_bigram("#start#")
 	while word in delimiter:
 		word = pick_random_word_unigram()
 	sentence = ""
@@ -86,8 +86,14 @@ def random_sentence_generator_bigram():
 		if word in delimiter:
 			break
 		sentence += word + " "
-		word = pick_random_word_unigram()
+		word = pick_random_word_bigram(word)
 		
 	return sentence+word
 	
-	
+print "---"
+print 
+for i in range(5):
+	sentence = random_sentence_generator_bigram()
+	while len(sentence) >= 99:
+		sentence = random_sentence_generator_bigram()
+	print sentence
