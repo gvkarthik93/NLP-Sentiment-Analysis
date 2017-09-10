@@ -11,20 +11,19 @@ bigram = {}
 # fopen
 
 for line in f:
-    line = ["<s>"]+line.split() + ["</s>"]
-    # for word in line:
-    #   # unigram[word] += 1
-    #   pass
-    for i in range(len(line)-1):
-        word, next_word = line[i], line[i+1]
+    line = "<s>" + " " + line + " " + "</s>"
+    unigram["</s>"] = unigram["</s>"] + 1
+    wordList = line.split()
+    for i in range(len(wordList) - 1):
+        word, next_word = wordList[i], wordList[i+1]
         unigram[word]+=1
-        
         if word not in bigram:
-            # bigram[word] = collections.defaultdict(int)
             bigram[word] = {}
         if next_word not in bigram[word]:
             bigram[word][next_word] = 0
         bigram[word][next_word]+=1
+
+print(list(unigram.keys()).count("</s>"))
 
 #  generate sentence
 
@@ -34,11 +33,13 @@ import random
 count = 0
 randomSentence = ""
 while (count < 10000):
-    randomWord = random.choice(unigram.keys)
+    randomWord = random.choice(list(unigram.keys()))
     if randomWord == "</s>":
         break
     randomSentence = randomSentence + " " + randomWord;
     count = count + 1;
+
+#print(randomSentence)
 
 #Bigram Random Sentence Generator
 count = 0
